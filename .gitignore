@@ -1,0 +1,10 @@
+node_modules
+.next
+.next-desktop
+dist
+data
+.env
+.env*.local
+ADMIN-CREDENCIALES.txt
+.claude
+*.log

@@ -1,0 +1,115 @@
+/* ================= Celular y tablet: ajustes finos ================= */
+
+/* notch y bordes redondeados (iPhone/Android en horizontal) */
+.main { padding-left: env(safe-area-inset-left); padding-right: env(safe-area-inset-right); }
+.sidebar { padding-left: max(12px, env(safe-area-inset-left)); }
+@media (max-width: 1279px) {
+  .dock { left: max(8px, env(safe-area-inset-left)); right: max(8px, env(safe-area-inset-right)); }
+}
+.hamb-cab { display: none !important; }
+
+/* ===== Celular en horizontal: todo en una sola pantalla ===== */
+@media (orientation: landscape) and (max-height: 540px) {
+  /* sin barra de título en la Cabina: el menú ☰ pasa a la fila de pestañas */
+  .shell.v-cabina.on .topbar { display: none; }
+  .shell.v-cabina.on .hamb-cab { display: grid !important; padding: 4px; flex: none; }
+
+  /* una sola fila: ☰ · pestañas · play D1 · crossfader · play D2 · REC */
+  .cab-bar { padding: max(6px, env(safe-area-inset-top)) 8px 4px; gap: 8px; flex-wrap: nowrap; }
+  .cab-bar .viewtabs { flex: none; gap: 4px; overflow: visible; }
+  .viewtabs button { padding: 6px 11px; font-size: 11px; }
+  .rec-tools { gap: 4px; width: auto; }
+  .rec-btn, .rec-list-btn { padding: 6px 10px; font-size: 11px; }
+  .rec-list-btn { max-width: 110px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+  .dock {
+    position: static; display: flex !important; align-items: center; gap: 8px;
+    flex: 1; min-width: 0; padding: 0; background: none; border: 0; box-shadow: none; backdrop-filter: none;
+    grid-template-columns: none; grid-template-areas: none;
+  }
+  .dk-deck, .dk-deck.d1 { flex: none; flex-direction: row; }
+  .dk-deck.d1 { order: 3; }
+  .dk-xf { order: 2; flex: 1; min-width: 90px; }
+  .dk-info { display: none; }
+  .dk-play { width: 34px; height: 34px; font-size: 11px; }
+  .dk-xf em { top: -8px; }
+  .rig { padding: 4px 6px calc(6px + env(safe-area-inset-bottom)); }
+
+  /* deck en 3 columnas: controles · jog · tempo */
+  .deck { padding: 6px 8px; gap: 4px; border-radius: 10px; }
+  .dhead { flex-wrap: nowrap; gap: 8px; }
+  .dtitle small { display: none; }
+  .dtitle b { font-size: 12px; }
+  .dtag { font-size: 10px; padding: 3px 6px; }
+  .readout { width: auto; padding: 2px 8px; gap: 10px; }
+  .readout div { min-width: 0; }
+  .readout b { font-size: 12px; }
+  .readout small { font-size: 7px; }
+  .bpmfix { display: none; }
+  .waves { gap: 3px; }
+  .wave.zoom { height: 38px; }
+  .wave.full { height: 14px; }
+  .dmain {
+    grid-template-columns: minmax(200px, 250px) minmax(0, 1fr) 58px !important;
+    grid-template-areas: "left jog right" !important;
+    gap: 10px; align-items: center;
+  }
+  .dleft { grid-area: left; gap: 4px; }
+  .jogcol { grid-area: jog; gap: 4px; }
+  .dright { grid-area: right; gap: 4px; }
+  .jog { width: min(100%, calc(100dvh - 186px)); max-width: none; }
+  .jogbtns button { padding: 4px 8px; font-size: 10px; }
+  .round { width: 34px; height: 34px; font-size: 10px; }
+  .round small { display: none; }
+  .rect { padding: 3px 2px; font-size: 8px; }
+  .modes { margin-top: 0; }
+  .modes button { padding: 3px 1px; font-size: 7px; }
+  .pads { gap: 3px; }
+  .pad { aspect-ratio: 1.45; font-size: 9px; border-radius: 5px; }
+  .transport { margin-top: 2px; gap: 10px; }
+  .big { width: 46px; height: 46px; font-size: 14px; border-width: 2px; }
+  .big.cue { font-size: 11px; }
+  .shift { padding: 4px 6px; font-size: 8px; }
+  .tempo .fader.v { height: calc(100dvh - 215px) !important; min-height: 100px; }
+  .tempo span { font-size: 8px; }
+  .bend button { width: 24px; padding: 3px; }
+  .dright .rect { font-size: 8px; }
+
+  /* mixer en 2 columnas para que quepa a lo ancho */
+  .rig[data-panel="mixer"] .mixer {
+    display: grid !important; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 8px;
+    max-width: none; align-items: start; padding: 8px;
+  }
+  .rig[data-panel="mixer"] .mixer > .brand { display: none; }
+  .rig[data-panel="mixer"] .mixer > .strips { grid-column: 1; grid-row: 1 / span 4; }
+  .rig[data-panel="mixer"] .mixer > .msec:not(.strips) { grid-column: 2; }
+  .rig[data-panel="mixer"] .mixer > .xfsec { display: none; }
+  /* canales compactos: perillas en 2 columnas y faders más cortos */
+  .rig[data-panel="mixer"] .strips { gap: 4px; }
+  .rig[data-panel="mixer"] .strip { display: grid; grid-template-columns: 1fr 1fr; justify-items: center; gap: 2px 4px; padding: 6px 4px; }
+  .rig[data-panel="mixer"] .strip > .chname,
+  .rig[data-panel="mixer"] .strip > .ytbadge,
+  .rig[data-panel="mixer"] .strip > .mini,
+  .rig[data-panel="mixer"] .strip > .faderrow,
+  .rig[data-panel="mixer"] .strip > .seg { grid-column: 1 / -1; }
+  .rig[data-panel="mixer"] .strip .knob svg { width: 30px; height: 30px; }
+  .rig[data-panel="mixer"] .strip .cuebtn { grid-column: 1 / -1; padding: 3px; }
+  .rig[data-panel="mixer"] .strip .fader.v, .rig[data-panel="mixer"] .strip .led { height: 92px !important; }
+  .rig[data-panel="mixer"] .center { gap: 3px; padding-top: 0; }
+  .rig[data-panel="mixer"] .center .knob svg { width: 30px; height: 30px; }
+  .rig[data-panel="mixer"] .mmeters .led { height: 80px !important; }
+  .rig[data-panel="mixer"] .msec { padding: 6px; }
+  .rig[data-panel="mixer"] .beatfx { gap: 4px; }
+  .rig[data-panel="mixer"] .fxon { width: 44px; height: 44px; }
+
+  /* el panel de grabaciones y la búsqueda no se esconden tras el notch */
+  .rec-sheet { padding-right: env(safe-area-inset-right); }
+}
+
+/* celulares muy pequeños en horizontal (iPhone SE: 667×375) */
+@media (orientation: landscape) and (max-height: 400px) {
+  .wave.full { display: none; }
+  .viewtabs button { padding: 5px 9px; }
+  .dmain { grid-template-columns: minmax(180px, 220px) minmax(0, 1fr) 52px !important; }
+  .rec-list-btn { display: none; }
+}

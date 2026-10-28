@@ -1,0 +1,67 @@
+{
+  "name": "dj-strap",
+  "productName": "DJ Strap",
+  "version": "1.0.0",
+  "description": "DJ Strap — consola DJ online",
+  "author": "DJ Strap",
+  "private": true,
+  "main": "electron/main.js",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "icons": "node scripts/make-icons.mjs",
+    "desktop:build": "node scripts/build-desktop.mjs",
+    "desktop": "npm run desktop:build && electron .",
+    "dist:win": "npm run desktop:build && electron-builder --win nsis",
+    "loadtest": "node scripts/loadtest.mjs",
+    "admin:create": "node scripts/create-admin.mjs"
+  },
+  "dependencies": {
+    "next": "14.2.15",
+    "react": "18.3.1",
+    "react-dom": "18.3.1"
+  },
+  "devDependencies": {
+    "electron": "^33.2.1",
+    "electron-builder": "^25.1.8"
+  },
+  "build": {
+    "appId": "com.djstrap.app",
+    "productName": "DJ Strap",
+    "directories": {
+      "output": "dist",
+      "buildResources": "build"
+    },
+    "files": [
+      "electron/**/*",
+      "build/icon.png",
+      "package.json",
+      "!node_modules/**/*"
+    ],
+    "extraResources": [
+      {
+        "from": ".next-desktop/standalone",
+        "to": "app",
+        "filter": [
+          "**/*"
+        ]
+      }
+    ],
+    "asar": true,
+    "npmRebuild": false,
+    "win": {
+      "target": "nsis",
+      "icon": "build/icon.png"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "DJ Strap",
+      "artifactName": "DJStrap-Setup-${version}.exe"
+    }
+  }
+}
